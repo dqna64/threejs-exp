@@ -1,3 +1,7 @@
+/*
+Based on MDN tutorial at https://github.com/mdn/learning-area/tree/main/javascript/apis/drawing-graphics/threejs-cube
+*/
+
 // Create a new scene; the 3D world which we manipulate
 const scene = new THREE.Scene();
 
