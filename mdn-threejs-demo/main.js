@@ -26,7 +26,9 @@ let t = 0;
 function render() {
     requestAnimationFrame(render);
     cube.rotation.set(t * Math.PI/6, t * Math.PI/6, 0);
+    torusScale = Math.abs(Math.sin(t))
     torus.rotation.set(t * Math.PI/6, t * Math.PI/6, 0);
+    torus.scale.set(torusScale, torusScale, torusScale)
     dodecahedron.rotation.set(t * Math.PI/6, t * Math.PI/6, 0);
     t += 0.01
     renderer.render(scene, camera);
@@ -53,18 +55,20 @@ var dodecahedron = new THREE.Mesh(dodecahedronGeometry, lambertMaterial);
 dodecahedron.position.x = 25;
 scene.add(dodecahedron);
 
-let ambientLight = new THREE.AmbientLight('rgb(255, 255, 255)'); // soft white light
+
+// Types of light: point, ambient, directional, hemisphere, spot
+
+let ambientLight = new THREE.AmbientLight(0xFFFFFF);
 scene.add(ambientLight);
 
-let spotLight_1 = new THREE.SpotLight('rgb(255, 255, 255)');
-spotLight_1.position.set( 100, 100, 20 );
-spotLight_1.castShadow = true;
-scene.add(spotLight_1);
+let spotLight = new THREE.SpotLight(0xFFFFFF);
+spotLight.position.set(100, 0, 0);
+spotLight.castShadow = true;
+scene.add(spotLight);
 
-let spotLight_2 = new THREE.SpotLight('rgb(136, 136, 136)');
-spotLight_2.position.set( -100, -100, -20 );
-spotLight_2.castShadow = true;
-scene.add(spotLight_2);
+var pointLight = new THREE.PointLight(0xFFFFFF);
+pointLight.position.set(-80, 0, 0);
+scene.add(pointLight);
 
 
 render();
