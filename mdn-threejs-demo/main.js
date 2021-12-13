@@ -37,6 +37,13 @@ var basicMaterial = new THREE.MeshBasicMaterial({color: 0xd173f0})
 // Bring the geometry and material together in a mesh that
 // can then be placed in the scene.
 var cube = new THREE.Mesh(boxGeometry, basicMaterial)
+cube.position.x = -25;
 scene.add(cube);
+
+var torusGeometry = new THREE.TorusGeometry(7, 1, 6, 12);
+var phongMaterial = new THREE.MeshPhongMaterial({color: 0xFF9500});
+var torus = new THREE.Mesh(torusGeometry, phongMaterial);
+scene.add(torus);
+
 
 render();
