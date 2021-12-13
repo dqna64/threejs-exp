@@ -30,6 +30,7 @@ function render() {
     torus.rotation.set(t * Math.PI/6, t * Math.PI/6, 0);
     torus.scale.set(torusScale, torusScale, torusScale)
     dodecahedron.rotation.set(t * Math.PI/6, t * Math.PI/6, 0);
+    dodecahedron.position.y = 7 * Math.sin(t)
     t += 0.01
     renderer.render(scene, camera);
 }
