@@ -5,7 +5,7 @@ const HEIGHT = window.innerHeight
 // including CSS2DRenderer, CSS2DRenderer and SVGRenderer.
 var renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(WIDTH, HEIGHT);
-renderer.setClearColor(0xDDDDDD, 1);
+renderer.setClearColor(0x222222, 1);
 document.body.appendChild(renderer.domElement);
 
 // Create a scene: a 3D coordinate system containing
@@ -18,7 +18,7 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(70, WIDTH/HEIGHT, 1, 1000);
 // Camera position values in 3D relative to origin. Unitless.
 // Default camera position x, y, z: 0
-camera.position.z = 30;
+camera.position.z = 50;
 scene.add(camera);
 
 let t = 0;
@@ -26,6 +26,7 @@ let t = 0;
 function render() {
     requestAnimationFrame(render);
     cube.rotation.set(t * Math.PI/6, t * Math.PI/6, 0);
+    torus.rotation.set(t * Math.PI/6, t * Math.PI/6, 0);
     t += 0.01
     renderer.render(scene, camera);
 }
@@ -41,9 +42,17 @@ cube.position.x = -25;
 scene.add(cube);
 
 var torusGeometry = new THREE.TorusGeometry(7, 1, 6, 12);
-var phongMaterial = new THREE.MeshPhongMaterial({color: 0xFF9500});
+var phongMaterial = new THREE.MeshPhongMaterial({color: 0x78baf0});
 var torus = new THREE.Mesh(torusGeometry, phongMaterial);
 scene.add(torus);
+
+let ambientLight = new THREE.AmbientLight('rgb(255, 255, 255)'); // soft white light
+scene.add(ambientLight);
+
+let spotLight = new THREE.SpotLight('rgb(255, 255, 255)');
+spotLight.position.set( 100, 100, 20 );
+spotLight.castShadow = true;
+scene.add(spotLight);
 
 
 render();
