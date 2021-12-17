@@ -13,8 +13,14 @@ camera.position.z = 50;
 scene.add(camera);
 
 const cylinderGeometry = new THREE.CylinderGeometry(10, 7, 12);
-const basicMaterial = new THREE.MeshBasicMaterial({color: 0x3b478a});
-const cyclinder = new THREE.Mesh(cyclinderGeometry, basicMaterial);
+// Instead of using a material provided by ThreeJS,
+// here we use a custom-made shader for the appearance of this object.
+// const basicMaterial = new THREE.MeshBasicMaterial({color: 0x3b478a});
+const shaderMaterial = new THREE.ShaderMaterial({
+    vertexShader: document.getElementById('vertexShader').textContent,
+    fragmentShader: document.getElementById('fragmentShader').textContent
+})
+const cylinder = new THREE.Mesh(cylinderGeometry, shaderMaterial);
 scene.add(cylinder);
 cylinder.rotation.set(Math.PI/6, 0, Math.PI/6);
 
