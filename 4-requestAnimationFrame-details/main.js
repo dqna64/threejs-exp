@@ -50,6 +50,22 @@ function draw() {
     */
 }
 
+function onWindowResize() {
+    // Camera frustrum aspect ratio
+    width = window.innerWidth;
+    height = window.innerHeight;
+    camera.aspect = width / height;
+
+    // once camera aspect ratio changed
+    camera.updateProjectionMatrix();
+
+    // Reset renderer size
+    renderer.setSize(width, height);
+
+}
+
+window.addEventListener('resize', onWindowResize, false);
+
 init();
 // Paint initial state of the scene before any updates.
 requestAnimationFrame(draw());
