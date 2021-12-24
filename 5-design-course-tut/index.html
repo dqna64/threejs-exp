@@ -5,13 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disco ball</title>
-    <script src='dist/main.js'></script>
+    <!-- Since dist/main.js is a bundled JS file, it is the only JS file
+    you'll need to include in the HTML. -->
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
     <h1>Howdy!</h1>
     <p>This project is built using npm, webpack and babel.</p>
-
+    
     <canvas id='drawingArea'></canvas>
     
+    <script src='dist/main.js'></script>
 </body>
 </html>
