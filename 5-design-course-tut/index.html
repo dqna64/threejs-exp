@@ -8,19 +8,44 @@
     <!-- Since dist/main.js is a bundled JS file, it is the only JS file
     you'll need to include in the HTML. -->
     <style>
-        body {
+        html, body {
             margin: 0;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            background-color: #111111;
+        }
+        body {
+            overflow-x: hidden;
         }
         #drawingArea {
-            background-color: #111111;
+            position:absolute;
+            top: 0;
+            left: 0;
+            outline: none;
+            mix-blend-mode: exclusion;
+        }
+        .container {
+            height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+        h1 {
+            font-size: 7rem;
+            text-transform: uppercase;
+            color: white;
+        }
+        section {
+            height: 100vh;
         }
     </style>
 </head>
 <body>
-    <h1>Howdy!</h1>
-    <p>This project is built using npm, webpack and babel.</p>
+    <div class='container'>
+        <h1>Disco Ball</h1>
+    </div>
     
     <canvas id='drawingArea'></canvas>
+
+    <section></section>
     
     <script src='dist/main.js'></script>
 </body>
