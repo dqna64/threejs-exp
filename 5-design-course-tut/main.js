@@ -93,6 +93,20 @@ scene.add(pointLight2Helper);
  * Animate
  */
 
+let dispX = 0;
+let dispY = 0;
+
+const midX = window.innerWidth / 2;
+const midY = window.innerHeight / 2;
+
+const mouseMoveEventHandler = (event) => {
+    dispX = event.clientX - midX;
+    dispY = event.clientY - midY;
+    console.log(dispX);
+}
+
+document.addEventListener('mousemove', mouseMoveEventHandler)
+
 const clock = new THREE.Clock()
 
 const tick = () => {
@@ -100,7 +114,20 @@ const tick = () => {
   // rather than based on each tick which may vary in real time duration.
   const elapsedTime = clock.getElapsedTime()
 
-  sphere.rotation.y = 0.4 * elapsedTime
+
+  console.log(dispX, dispY);
+
+  
+  sphere.rotation.y += 0.008 + dispX * 0.0001;
+  if (Math.abs(dispX) >= 4) {
+    dispX = dispX / Math.abs(dispX) *  (Math.abs(dispX) - 4);
+  }
+
+  sphere.rotation.x += 0.008 + dispY * 0.0001;
+  if (Math.abs(dispY) >= 4) {
+    dispY = dispY / Math.abs(dispY) * (Math.abs(dispY) - 4);
+
+  }
 
   renderer.render(scene, camera)
 
