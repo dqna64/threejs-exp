@@ -57,20 +57,34 @@ material.color = new THREE.Color(0x222222)
 const sphere = new THREE.Mesh(geometry, material)
 scene.add(sphere)
 
+
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
 
-const pointLight1 = new THREE.PointLight(0xf545a0, 0.3, 25)
+
+const pointLight1Settings = gui.addFolder("PointLight 1 settings")
+const light1Color = {color: 0xf545a0};
+
+const pointLight1 = new THREE.PointLight(light1Color.color, 0.3, 25)
 pointLight1.position.set(8, 10, 10);
 scene.add(pointLight1)
-gui.add(pointLight1.position, 'x').min(-20).max(20).step(0.01);
+
+pointLight1Settings.add(pointLight1.position, 'x').min(-20).max(20).step(0.01);
+pointLight1Settings.add(pointLight1, 'intensity').min(0).max(5).step(0.01);
 const pointLight1Helper = new THREE.PointLightHelper(pointLight1)
 scene.add(pointLight1Helper);
 
+pointLight1Settings.addColor(light1Color, 'color').onChange(() => {
+    pointLight1.color.set(light1Color.color)
+})
+
+
+const pointLight2Settings = gui.addFolder("PointLight 2 settings")
 const pointLight2 = new THREE.PointLight(0x367cf5, 0.7, 25)
 pointLight2.position.set(-8, -10, 10);
 scene.add(pointLight2)
-gui.add(pointLight2.position, 'y').min(-20).max(20).step(0.01);
+pointLight2Settings.add(pointLight2.position, 'y').min(-20).max(20).step(0.01);
+pointLight2Settings.add(pointLight2, 'intensity').min(0).max(5).step(0.01);
 const pointLight2Helper = new THREE.PointLightHelper(pointLight2)
 scene.add(pointLight2Helper);
 
