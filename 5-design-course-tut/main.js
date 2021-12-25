@@ -4,9 +4,9 @@
 // dist/main.js can be put into HTML file.
 import * as THREE from 'three'
 
-// import * as dat from 'dat.gui'
+import * as dat from 'dat.gui'
 
-// const gui = new dat.GUI();
+const gui = new dat.GUI();
 
 const sizes = {
   width: window.innerWidth,
@@ -22,7 +22,7 @@ const canvas = document.getElementById('drawingArea')
 const scene = new THREE.Scene()
 
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000)
-camera.position.z = 30;
+camera.position.z = 40;
 
 const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true })
 renderer.setSize(sizes.width, sizes.height)
@@ -52,24 +52,28 @@ const material = new THREE.MeshStandardMaterial();
 material.metalness = 0.7;
 material.roughness = 0.2;
 material.normalMap = normalTexture;
-material.color = new THREE.Color(0x39afee)
+material.color = new THREE.Color(0x222222)
 
 const sphere = new THREE.Mesh(geometry, material)
 scene.add(sphere)
 
-const ambientLight = new THREE.AmbientLight();
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
 
-const spotLight = new THREE.SpotLight(0xFFFFFF);
-spotLight.position.set(-20, -20, 40);
-spotLight.castShadow = true;
-scene.add(spotLight);
+const pointLight1 = new THREE.PointLight(0xf545a0, 0.3, 25)
+pointLight1.position.set(8, 10, 10);
+scene.add(pointLight1)
+gui.add(pointLight1.position, 'x').min(-20).max(20).step(0.01);
+const pointLight1Helper = new THREE.PointLightHelper(pointLight1)
+scene.add(pointLight1Helper);
 
-const pointLight = new THREE.PointLight(0xffffff, 0.1, 80)
-pointLight.position.x = 3
-pointLight.position.y = 4
-pointLight.position.z = 20
-scene.add(pointLight)
+const pointLight2 = new THREE.PointLight(0x367cf5, 0.7, 25)
+pointLight2.position.set(-8, -10, 10);
+scene.add(pointLight2)
+gui.add(pointLight2.position, 'y').min(-20).max(20).step(0.01);
+const pointLight2Helper = new THREE.PointLightHelper(pointLight2)
+scene.add(pointLight2Helper);
+
 
 /**
  * Animate
