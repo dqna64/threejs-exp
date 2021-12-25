@@ -65,7 +65,7 @@ scene.add(ambientLight);
 const pointLight1Settings = gui.addFolder("PointLight 1 settings")
 const light1Color = {color: 0xf545a0};
 
-const pointLight1 = new THREE.PointLight(light1Color.color, 0.3, 25)
+const pointLight1 = new THREE.PointLight(light1Color.color, 3, 25)
 pointLight1.position.set(8, 10, 10);
 scene.add(pointLight1)
 
@@ -80,7 +80,7 @@ pointLight1Settings.addColor(light1Color, 'color').onChange(() => {
 
 
 const pointLight2Settings = gui.addFolder("PointLight 2 settings")
-const pointLight2 = new THREE.PointLight(0x367cf5, 0.7, 25)
+const pointLight2 = new THREE.PointLight(0x367cf5, 2, 25)
 pointLight2.position.set(-8, -10, 10);
 scene.add(pointLight2)
 pointLight2Settings.add(pointLight2.position, 'y').min(-20).max(20).step(0.01);
@@ -104,8 +104,12 @@ const mouseMoveEventHandler = (event) => {
     dispY = event.clientY - midY;
     console.log(dispX);
 }
-
 document.addEventListener('mousemove', mouseMoveEventHandler)
+
+const parallaxScroll = (event) => {
+  sphere.position.y = window.scrollY * 0.1
+}
+window.addEventListener('scroll', parallaxScroll)
 
 const clock = new THREE.Clock()
 

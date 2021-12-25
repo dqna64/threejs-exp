@@ -7,5 +7,6 @@ This folder demonstrates the following features:
 - light source debuggers
 - mouse move event
 - css attribute `mix_blend_mode` for HTMLCanvasElement
+- parallax effect on ThreeJS objects based on vertical scroll
 
 Adapted from (Design Course tutorial on ThreeJS)[https://youtu.be/pUgWfqWZWmM]
