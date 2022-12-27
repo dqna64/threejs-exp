@@ -1,5 +1,5 @@
 import './style.css'
-import { BoxGeometry, Mesh, MeshStandardMaterial, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { AmbientLight, BoxGeometry, Mesh, MeshStandardMaterial, PerspectiveCamera, PointLight, Scene, WebGLRenderer } from "three";
 
 // ===== Scene =====
 const scene = new Scene();
@@ -15,18 +15,51 @@ const camera = new PerspectiveCamera(
 
 camera.position.z = 5;
 
+class Cube extends Mesh {
+  constructor(width: number, height: number, depth: number) {
+    super();
 
-// ===== Cube mesh =====
+    const geometry = new BoxGeometry(width, height, depth);
+    this.geometry = geometry;
+    
+    const material = new MeshStandardMaterial();
+    this.material = material;
 
-const cube = new Mesh();
+  }
 
-const geometry = new BoxGeometry();
-const material = new MeshStandardMaterial();
+  update() {
+    this.rotation.x += 0.01;
+    this.rotation.y += 0.01;
+  }
 
-cube.geometry = geometry;
-cube.material = material;
+  dispose() {
+    this.geometry.dispose();
+  }
+}
 
+
+// ===== Scene elements =====
+
+const cube = new Cube(2,2,2);
 scene.add(cube);
+
+const subCubeZ = new Cube(1,1,4);
+cube.add(subCubeZ);
+
+const subCubeY = new Cube(1,4,1);
+cube.add(subCubeY);
+
+const subCubeX = new Cube(4,1,1);
+cube.add(subCubeX);
+
+const ambientLight = new AmbientLight();
+scene.add(ambientLight);
+
+const pointLight = new PointLight();
+pointLight.position.set(10,10,10);
+scene.add(pointLight);
+
+
 
 
 // ===== Renderer
@@ -48,6 +81,8 @@ if (container) {
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
+
+  cube.update();
 }
 
 animate();
