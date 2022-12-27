@@ -1,23 +1,53 @@
 import './style.css'
-import typescriptLogo from './typescript.svg'
-import { setupCounter } from './counter'
+import { BoxGeometry, Mesh, MeshStandardMaterial, PerspectiveCamera, Scene, WebGLRenderer } from "three";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+// ===== Scene =====
+const scene = new Scene();
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+// ===== Camera =====
+// All the default values that react-three-fiber passes to PerspectiveCamera
+const camera = new PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000,
+);
+
+camera.position.z = 5;
+
+
+// ===== Cube mesh =====
+
+const cube = new Mesh();
+
+const geometry = new BoxGeometry();
+const material = new MeshStandardMaterial();
+
+cube.geometry = geometry;
+cube.material = material;
+
+scene.add(cube);
+
+
+// ===== Renderer
+// react-three-fiber defaults
+const renderer = new WebGLRenderer({ alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+
+const container = document.querySelector<HTMLDivElement>("#app");
+if (container) {
+  container.appendChild(renderer.domElement);
+}
+
+
+// The scene, camera and renderer constitute what is automatically provided by
+// the `Canvas` element in react-three-fiber
+
+
+function animate() {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+}
+
+animate();
