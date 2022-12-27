@@ -1,11 +1,14 @@
+/**
+ * This ThreeJS sketch demonstrates a simple project with manually setting
+ * the default values that react-three-fiber uses for scene, camera
+ */
 import './style.css'
-import { AmbientLight, BoxGeometry, Mesh, MeshStandardMaterial, PerspectiveCamera, PointLight, Scene, WebGLRenderer } from "three";
+import { ACESFilmicToneMapping, AmbientLight, BoxGeometry, Mesh, MeshStandardMaterial, PerspectiveCamera, PointLight, Scene, sRGBEncoding, WebGLRenderer } from "three";
 
 // ===== Scene =====
 const scene = new Scene();
 
 // ===== Camera =====
-// All the default values that react-three-fiber passes to PerspectiveCamera
 const camera = new PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
@@ -22,7 +25,7 @@ class Cube extends Mesh {
     const geometry = new BoxGeometry(width, height, depth);
     this.geometry = geometry;
     
-    const material = new MeshStandardMaterial();
+    const material = new MeshStandardMaterial({ color: "#1e90d6"});
     this.material = material;
 
   }
@@ -52,19 +55,23 @@ cube.add(subCubeY);
 const subCubeX = new Cube(4,1,1);
 cube.add(subCubeX);
 
-const ambientLight = new AmbientLight();
+const ambientLight = new AmbientLight("0xffffff", 0.4);
 scene.add(ambientLight);
 
-const pointLight = new PointLight();
+const pointLight = new PointLight("0xffffff", 0.5);
+// Not allowed to set the pointLight.position property, only allowed to mutate
+// the Vector3 value because it is expensive to create and should not be created
+// on each render.
 pointLight.position.set(10,10,10);
 scene.add(pointLight);
 
 
-
-
 // ===== Renderer
 // react-three-fiber defaults
-const renderer = new WebGLRenderer({ alpha: true });
+const renderer = new WebGLRenderer({ alpha: true, antialias: true });
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.toneMapping = ACESFilmicToneMapping;
+renderer.outputEncoding = sRGBEncoding;
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 
@@ -74,9 +81,9 @@ if (container) {
 }
 
 
-// The scene, camera and renderer constitute what is automatically provided by
-// the `Canvas` element in react-three-fiber
-
+// The scene, camera and renderer, and the requestAnimationFrame below
+// constitute what is automatically provided by the `Canvas` element in
+// react-three-fiber.
 
 function animate() {
   requestAnimationFrame(animate);
